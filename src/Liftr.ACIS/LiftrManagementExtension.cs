@@ -107,7 +107,11 @@ namespace Microsoft.Liftr.ACIS
         {
             "System.Runtime.InteropServices",
             "System.Runtime.InteropServices.RuntimeInformation",
+            "System.Security.Cryptography.Algorithms",
             "System.Security.Cryptography.Csp",
+            "System.Security.Cryptography.Encoding",
+            "System.Security.Cryptography.Primitives",
+            "System.Security.Cryptography.X509Certificates",
         };
     }
 }
