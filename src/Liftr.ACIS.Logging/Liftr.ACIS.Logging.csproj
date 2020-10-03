@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(LiftrACISClassLibraryTargetFramework)</TargetFramework>
+    <AssemblyName>Microsoft.Liftr.ACIS.Logging</AssemblyName>
+    <RootNamespace>Microsoft.Liftr.ACIS.Logging</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AcisExtensionSDK" Version="$(PackageVersion_AcisExtensionSDK)" />
+    <PackageReference Include="Microsoft.Liftr.Logging.StaticLogger" Version="$(PackageVersion_Microsoft_Liftr_Logging_StaticLogger)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Liftr.ACIS.Logging.Abstractions\Liftr.ACIS.Logging.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

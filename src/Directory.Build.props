@@ -24,7 +24,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
   <PropertyGroup>
     <LiftrClassLibraryTargetFramework>netstandard2.0</LiftrClassLibraryTargetFramework>
-    <LiftrClassLibraryTargetFramework21>netstandard2.1</LiftrClassLibraryTargetFramework21>
+    <LiftrACISClassLibraryTargetFramework>net462</LiftrACISClassLibraryTargetFramework>
     <LiftrExeTargetFramework>netcoreapp3.1</LiftrExeTargetFramework>
   </PropertyGroup>
 
