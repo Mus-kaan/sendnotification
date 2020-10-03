@@ -6,7 +6,10 @@ using Microsoft.Liftr.ACIS.Logging;
 using Microsoft.Liftr.Logging.StaticLogger;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Microsoft.Liftr.ACIS
 {
@@ -28,6 +31,8 @@ namespace Microsoft.Liftr.ACIS
             StaticLiftrLogger.Initilize(ikey);
             var logger = new AcisLogger(this);
             logger.LogInfo($"Just loaded {nameof(LiftrManagementExtension)}");
+            SetupAssemblyRedirection();
+            LoadAssembly(logger);
             return true;
         }
 
@@ -58,5 +63,51 @@ namespace Microsoft.Liftr.ACIS
 
             return true;
         }
+
+        private static void SetupAssemblyRedirection()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
+            {
+                string currentFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                AssemblyName requestedName = new AssemblyName(e.Name);
+                if (s_redirectDllList.Contains(requestedName.Name))
+                {
+                    var resolvedAssembly = Assembly.LoadFrom(Path.Combine(currentFolder, requestedName.Name + ".dll"));
+
+                    // Be careful of the below if condition. If you are using an older version of the dll from our dll in your package, it will load our newer version.
+                    if (resolvedAssembly.GetName().Version < requestedName.Version)
+                    {
+                        return null;
+                    }
+
+                    return resolvedAssembly;
+                }
+                else
+                {
+                    return null;
+                }
+            };
+        }
+
+        private static void LoadAssembly(AcisLogger logger)
+        {
+            // We need to do this because Actions runtime is using old version of the bellow
+            // dll, and it causes the problem
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            var dir = Path.GetDirectoryName(assemblyLocation);
+
+            foreach (var dll in s_redirectDllList)
+            {
+                var assembly = Assembly.LoadFrom(Path.Combine(dir, $"{dll}.dll"));
+                AppDomain.CurrentDomain.Load(assembly.GetName());
+            }
+        }
+
+        private static readonly HashSet<string> s_redirectDllList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "System.Runtime.InteropServices",
+            "System.Runtime.InteropServices.RuntimeInformation",
+            "System.Security.Cryptography.Csp",
+        };
     }
 }
