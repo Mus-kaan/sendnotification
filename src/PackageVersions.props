@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PackageVersion_AcisExtensionSDK>1.0.4.1310</PackageVersion_AcisExtensionSDK>
-    <PackageVersion_Microsoft_Liftr_Logging>3.0.1371-build735</PackageVersion_Microsoft_Liftr_Logging>
-    <PackageVersion_Microsoft_Liftr_Logging_StaticLogger>3.0.1371-build735</PackageVersion_Microsoft_Liftr_Logging_StaticLogger>
+    <PackageVersion_Microsoft_Liftr_Logging>3.0.1371-build736</PackageVersion_Microsoft_Liftr_Logging>
+    <PackageVersion_Microsoft_Liftr_Logging_StaticLogger>3.0.1371-build736</PackageVersion_Microsoft_Liftr_Logging_StaticLogger>
   </PropertyGroup>
 </Project>

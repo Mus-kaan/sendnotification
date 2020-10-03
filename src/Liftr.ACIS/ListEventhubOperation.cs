@@ -65,6 +65,7 @@ namespace Microsoft.Liftr.ACIS
             }
 
             var logger = new AcisLogger(extension, updater, endpoint);
+            var ops = logger.StartTimedOperation(nameof(ListEventhub));
             try
             {
                 // TODO: rotate this secondary key
@@ -83,6 +84,7 @@ namespace Microsoft.Liftr.ACIS
             }
             catch (Exception ex)
             {
+                ops.FailOperation(ex.Message);
                 logger.LogError(ex, $"{nameof(ListEventhub)} failed");
                 return AcisSMEOperationResponseExtensions.StandardErrorResponse(ex);
             }
