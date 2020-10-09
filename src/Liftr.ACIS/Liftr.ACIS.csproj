@@ -7,10 +7,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AcisExtensionSDK" Version="$(PackageVersion_AcisExtensionSDK)" />
+    <PackageReference Include="Microsoft.Liftr.ACIS.Common" Version="$(PackageVersion_Microsoft_Liftr_ACIS_Common)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj" />
-    <ProjectReference Include="..\Liftr.Management\Liftr.Management.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="LiftrExtension.config">

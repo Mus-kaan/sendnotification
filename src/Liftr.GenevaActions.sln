@@ -11,13 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{6AC1C9
 		PackageVersions.props = PackageVersions.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liftr.ACIS", "Liftr.ACIS\Liftr.ACIS.csproj", "{75CD7585-CE14-4D29-A371-D2A1F3F5762B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS", "Liftr.ACIS\Liftr.ACIS.csproj", "{75CD7585-CE14-4D29-A371-D2A1F3F5762B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liftr.Management", "Liftr.Management\Liftr.Management.csproj", "{A0E841F0-F542-4ED2-AFCD-DC130CCF7E45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liftr.ACIS.Logging", "Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj", "{1E12913B-604B-4382-A7AF-1309EB480FB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liftr.ACIS.Logging.Abstractions", "Liftr.ACIS.Logging.Abstractions\Liftr.ACIS.Logging.Abstractions.csproj", "{8658AB05-B4EC-45C6-96F8-44D6AE9ED78B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Logging", "Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj", "{1E12913B-604B-4382-A7AF-1309EB480FB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +25,10 @@ Global
 		{75CD7585-CE14-4D29-A371-D2A1F3F5762B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75CD7585-CE14-4D29-A371-D2A1F3F5762B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75CD7585-CE14-4D29-A371-D2A1F3F5762B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0E841F0-F542-4ED2-AFCD-DC130CCF7E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0E841F0-F542-4ED2-AFCD-DC130CCF7E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0E841F0-F542-4ED2-AFCD-DC130CCF7E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0E841F0-F542-4ED2-AFCD-DC130CCF7E45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8658AB05-B4EC-45C6-96F8-44D6AE9ED78B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8658AB05-B4EC-45C6-96F8-44D6AE9ED78B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8658AB05-B4EC-45C6-96F8-44D6AE9ED78B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8658AB05-B4EC-45C6-96F8-44D6AE9ED78B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

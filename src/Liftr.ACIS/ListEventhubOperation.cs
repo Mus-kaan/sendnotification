@@ -2,12 +2,14 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+using Microsoft.Liftr.ACIS.Common;
 using Microsoft.Liftr.ACIS.Logging;
-using Microsoft.Liftr.DataSource.Mongo.MonitoringSvc;
-using Microsoft.Liftr.Management;
+using Microsoft.Liftr.ACIS.Relay;
+using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.Liftr.ACIS
 {
@@ -49,6 +51,11 @@ namespace Microsoft.Liftr.ACIS
         /// </summary>
         public IAcisSMEOperationResponse ListEventhub(IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
+            return ListEventhubAsync(extension, updater, endpoint).Result;
+        }
+
+        private async Task<IAcisSMEOperationResponse> ListEventhubAsync(IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        {
             if (extension == null)
             {
                 throw new ArgumentNullException(nameof(extension));
@@ -65,28 +72,25 @@ namespace Microsoft.Liftr.ACIS
             }
 
             var logger = new AcisLogger(extension, updater, endpoint);
-            var ops = logger.StartTimedOperation(nameof(ListEventhub));
-            try
+
+            logger.LogInfo("Loading ACIS storage account connection string from key vault ...");
+            logger.LogInfo($"Secret Identifiers: {endpoint.Secrets.Identifiers.ToJson()}");
+            var secret = await endpoint.Secrets.GetSecretAsync("ACISStorConn");
+
+            ACISOperationStorageOptions options = new ACISOperationStorageOptions()
             {
-                // TODO: rotate this secondary key
-                var connectionString = "mongodb://dd-dev-data20200502-wus2-db:vnIjs5DweP6ufjIsdYQUaXhVtag6Ku2KWtTlX9cbPZO553Cua0qIB3GvKI4wMEO31LqOOs9JR4yEYHSXfcodbw==@dd-dev-data20200502-wus2-db.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
-                MonitoringSvcMongoOptions options = new MonitoringSvcMongoOptions()
-                {
-                    ConnectionString = connectionString,
-                    DatabaseName = "monitoringsvc-metadata",
-                };
+                StorageAccountConnectionString = secret,
+            };
 
-                var evhManagement = new EventHubManagement(options, logger);
-
-                var evhList = evhManagement.ListAsync().Result;
-
-                return AcisSMEOperationResponseExtensions.StandardSuccessResponse(evhList);
+            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
+            var result = await coordinator.StartWorkAsync(nameof(ListEventhub), parameters: string.Empty);
+            if (result.Succeeded)
+            {
+                return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
             }
-            catch (Exception ex)
+            else
             {
-                ops.FailOperation(ex.Message);
-                logger.LogError(ex, $"{nameof(ListEventhub)} failed");
-                return AcisSMEOperationResponseExtensions.StandardErrorResponse(ex);
+                return AcisSMEOperationResponseExtensions.SpecificErrorResponse(result.Result);
             }
         }
     }
