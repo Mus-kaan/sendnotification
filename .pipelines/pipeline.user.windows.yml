@@ -20,9 +20,9 @@ workspace_options:
     # If true, all stages enable network connectivity to user build container.
 
 version:
-  name: "Liftr.Common"
-  major: 3 # The major version number.
-  minor: 0 # The minor version number
+  name: "Liftr.GenevaActions"
+  major: 1 # The major version number.
+  minor: 2009 # The minor version number
   system: "buildrevision"
 
 versioning:
