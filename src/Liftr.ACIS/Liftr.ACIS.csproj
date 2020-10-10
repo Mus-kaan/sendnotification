@@ -13,8 +13,21 @@
     <ProjectReference Include="..\Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="LiftrExtension.config">
+    <None Update="*.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <GASMEPackageInputDir>$(MSBuildProjectDirectory)\bin\$(Configuration)\$(targetframework)</GASMEPackageInputDir>
+    <GASMEPackageOutputDir>$(MSBuildProjectDirectory)\bin\GenevaActionPackages</GASMEPackageOutputDir>
+    <GAPackageName>$(AssemblyName)</GAPackageName>
+    <GASMEAssembly>$(AssemblyName).dll</GASMEAssembly>
+    <Authors>liftrdev</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <GAPackageEnvironment Include="Test">
+      <!-- No input and output directories specified. We take the values defined above for GASMEPackageInputDir and  GASMEPackageOutputDir-->
+      <SMEConfigFile>LiftrExtension.Test.config</SMEConfigFile>
+    </GAPackageEnvironment>
   </ItemGroup>
 </Project>
