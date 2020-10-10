@@ -7,6 +7,7 @@ using Microsoft.Liftr.Logging.StaticLogger;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,7 +20,7 @@ namespace Microsoft.Liftr.ACIS
 
         public override string ServiceName => ServiceNameConst;
 
-        public override string ExtensionVersion => "1.0";
+        public override string ExtensionVersion => GetVersion();
 
         /// <summary>
         /// Always called when extension is loaded, allows dynamic creation of
@@ -62,6 +63,13 @@ namespace Microsoft.Liftr.ACIS
             logger.LogInfo($".. configuration defines environment as {endpoint.Configuration.GetConfigurationValue("env")}");
 
             return true;
+        }
+
+        private static string GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var assemblyProductVersion = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+            return assemblyProductVersion;
         }
 
         private static void SetupAssemblyRedirection()
