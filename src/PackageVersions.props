@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PackageVersion_AcisExtensionSDK>1.0.4.1310</PackageVersion_AcisExtensionSDK>
+    <PackageVersion_Microsoft_Liftr_ACIS_Common>[3.0.1378-build759]</PackageVersion_Microsoft_Liftr_ACIS_Common>
+    <PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>[3.0.1378-build759]</PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>
+    <PackageVersion_Microsoft_Liftr_Logging_StaticLogger>[3.0.1378-build759]</PackageVersion_Microsoft_Liftr_Logging_StaticLogger>
+  </PropertyGroup>
+</Project>
