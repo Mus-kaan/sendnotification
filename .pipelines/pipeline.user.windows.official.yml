@@ -1,0 +1,12 @@
+package:
+  commands:
+    - !!buildcommand
+      name: "Package Geneva Actions"
+      command: "build/run-windows-pack-acis.cmd"
+      artifacts:
+        - from: "out"
+          to: "out"
+          include:
+            - '**/*.Package'
+          signing_options:
+            profile: '143360024'

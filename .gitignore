@@ -302,6 +302,7 @@ contentFiles
 
 *.auth.json
 buildtools/
+out/
 out-ev2/
 out-ev2-global/
 out-ev2-vmss/
