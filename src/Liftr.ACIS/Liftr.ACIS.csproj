@@ -29,5 +29,9 @@
       <!-- No input and output directories specified. We take the values defined above for GASMEPackageInputDir and  GASMEPackageOutputDir-->
       <SMEConfigFile>LiftrExtension.Test.config</SMEConfigFile>
     </GAPackageEnvironment>
+    <GAPackageEnvironment Include="Public">
+      <!-- No input and output directories specified. We take the values defined above for GASMEPackageInputDir and  GASMEPackageOutputDir-->
+      <SMEConfigFile>LiftrExtension.Prod.config</SMEConfigFile>
+    </GAPackageEnvironment>
   </ItemGroup>
 </Project>
