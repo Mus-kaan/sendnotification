@@ -13,3 +13,5 @@ echo "ACISPackageManager: %ACISPackageManager%"
 
 set _ENV=Test
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Liftr_%_ENV% -SMEConfig:LiftrExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.dll
+
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Datadog\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Datadog_%_ENV% -SMEConfig:DatadogExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Datadog.dll
