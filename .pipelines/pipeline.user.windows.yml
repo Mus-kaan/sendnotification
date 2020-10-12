@@ -51,7 +51,6 @@ build:
           include:
             - "*/bin/*/*/Microsoft.Liftr.*.dll"
             - "*/bin/*/*/Microsoft.Liftr.*.exe"
-            - "*/bin/GenevaActionPackages/*.Package"
           exclude:
             - "**/*.Tests/**"
             - "**/*.Tests.*/**"
@@ -59,6 +58,8 @@ build:
             - "**/Samples/**"
             - "**/BaseImageBuilder/**"
             - "**/Deployment.Runner/**"
+          signing_options:
+            sign_inline: true  # This does signing a soon as this command completes
 
 package:
   commands:
