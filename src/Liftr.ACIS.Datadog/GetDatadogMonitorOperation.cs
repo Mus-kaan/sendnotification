@@ -24,7 +24,7 @@ namespace Microsoft.Liftr.ACIS
     {
         public override string OperationName => "GetDatadogMonitor";
 
-        public override IAcisSMEOperationGroup OperationGroup => new LogForwarderOperationGroup();
+        public override IAcisSMEOperationGroup OperationGroup => new RPaaSOperationGroup();
 
         public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceViewer };
 

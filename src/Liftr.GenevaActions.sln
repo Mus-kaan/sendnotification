@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS", "Liftr.ACIS\Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Logging", "Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj", "{1E12913B-604B-4382-A7AF-1309EB480FB8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Datadog", "Liftr.ACIS.Datadog\Liftr.ACIS.Datadog.csproj", "{B9AFF975-7C38-4596-815E-51CF2D7CD503}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E12913B-604B-4382-A7AF-1309EB480FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9AFF975-7C38-4596-815E-51CF2D7CD503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9AFF975-7C38-4596-815E-51CF2D7CD503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9AFF975-7C38-4596-815E-51CF2D7CD503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9AFF975-7C38-4596-815E-51CF2D7CD503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
