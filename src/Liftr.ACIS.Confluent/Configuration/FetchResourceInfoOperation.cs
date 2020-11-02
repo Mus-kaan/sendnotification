@@ -2,18 +2,25 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+using Microsoft.Liftr.ACIS.Common;
+using Microsoft.Liftr.ACIS.Confluent.Common;
 using Microsoft.Liftr.ACIS.Confluent.Params;
+using Microsoft.Liftr.ACIS.Logging;
+using Microsoft.Liftr.ACIS.Relay;
+using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.Liftr.ACIS.Confluent.Configuration
 {
-    public class FetchInternalMetadataOperation : AcisSMEOperation
+    public class FetchResourceInfoOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Get Internal Metadata"; }
+        public override string OperationName { get => "Get Resource"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
@@ -56,7 +63,7 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
         /// </summary>
         public override IEnumerable<IAcisSMEParameterRef> Parameters
         {
-            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<ResourceIdParameter>() }; }
+            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<ResourceIdParameter>(), ParamRefFromParam.Get<TenantIdParameter>() }; }
         }
 
         /// <summary>
@@ -65,20 +72,54 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
         /// for example this class name is FetchInternalMetadata and thus method name is FetchInternalMetadata()
         /// </summary>
         /// <param name="resourceId">Resource Id. This param is picked from Params attribute in the same order</param>
+        /// <param name="tenantId">Tenant Id</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-#pragma warning disable CA1822 // Mark members as static
-        public IAcisSMEOperationResponse FetchInternalMetadata(string resourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
-#pragma warning restore CA1822 // Mark members as static
+        public IAcisSMEOperationResponse FetchResourceInfo(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
-            var returnMessage = $"Dummy internal Metadata {resourceId}";
+            return FetchResourceInfoAsync(resourceId, tenantId, extension, updater, endpoint).Result;
+        }
 
-#pragma warning disable CA1062 // Validate arguments of public methods
-            updater.WriteLine("Finished operation");
-#pragma warning restore CA1062 // Validate arguments of public methods
-            return AcisSMEOperationResponseExtensions.StandardSuccessResponse(returnMessage);
+        public async Task<IAcisSMEOperationResponse> FetchResourceInfoAsync(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        {
+            if (extension == null)
+            {
+                throw new ArgumentNullException(nameof(extension));
+            }
+
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+
+            if (updater == null)
+            {
+                throw new ArgumentNullException(nameof(updater));
+            }
+
+            var logger = new AcisLogger(extension, updater, endpoint);
+
+            logger.LogInfo("Loading ACIS storage account connection string from key vault ...");
+            logger.LogInfo($"Secret Identifiers: {endpoint.Secrets.Identifiers.ToJson()}");
+            var secret = await endpoint.Secrets.GetSecretAsync(Constants.ACISStorConn);
+
+            ACISOperationStorageOptions options = new ACISOperationStorageOptions()
+            {
+                StorageAccountConnectionString = secret,
+            };
+
+            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
+            var result = await coordinator.StartWorkAsync(Constants.FetchInternalMetadataOperationName, parameters: $"{resourceId}~GA~{tenantId}");
+            if (result.Succeeded)
+            {
+                return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
+            }
+            else
+            {
+                return AcisSMEOperationResponseExtensions.SpecificErrorResponse(result.Result);
+            }
         }
     }
 }
