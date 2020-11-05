@@ -2,18 +2,22 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+using Microsoft.Liftr.ACIS.Confluent.Common;
+using Microsoft.Liftr.ACIS.Confluent.Params;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
-using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Liftr.ACIS.Confluent.Partner
 {
-    public class FailedRequestWebhookCallOperation : AcisSMEOperation
+    /// <summary>
+    /// Use Geneva action to invoke the webhook to inform Partner about activation of resource failed
+    /// </summary>
+    public class DeleteResourceFailedWebhookOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Invoke Failed Request Webhook"; }
+        public override string OperationName { get => "Delete Resource Webhook"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
@@ -54,27 +58,22 @@ namespace Microsoft.Liftr.ACIS.Confluent.Partner
         /// This controls all input parameters to an operation. For current operation we do not have any input parameters.
         /// Look at examples mentioned in the end of this tutorial to see how different parameters can be used.
         /// </summary>
-        public override IEnumerable<IAcisSMEParameterRef> Parameters => Array.Empty<IAcisSMEParameterRef>();
+        public override IEnumerable<IAcisSMEParameterRef> Parameters
+        {
+            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<ResourceIdParameter>(), ParamRefFromParam.Get<TenantIdParameter>() }; }
+        }
 
         /// <summary>
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchInternalMetadata and thus method name is FetchInternalMetadata()
         /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="tenantId"></param>
         /// <param name="extension"></param>
         /// <param name="updater"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-#pragma warning disable CA1822 // Mark members as static
-        public IAcisSMEOperationResponse FailedRequestWebhookCall(IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
-#pragma warning restore CA1822 // Mark members as static
-        {
-            var returnMessage = "Mock Webhook call";
-
-#pragma warning disable CA1062 // Validate arguments of public methods
-            updater.WriteLine("Finished operation");
-#pragma warning restore CA1062 // Validate arguments of public methods
-            return AcisSMEOperationResponseExtensions.StandardSuccessResponse(returnMessage);
-        }
+        public IAcisSMEOperationResponse DeleteResourceFailedWebhook(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.DeleteResourceFailedWebhookOperationName, extension, updater, endpoint, parameters: Common.Utilities.CombineResourceIdTenantId(resourceId, tenantId)).Result;
     }
 }

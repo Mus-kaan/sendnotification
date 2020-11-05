@@ -2,30 +2,27 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
-using Microsoft.Liftr.ACIS.Common;
 using Microsoft.Liftr.ACIS.Confluent.Common;
 using Microsoft.Liftr.ACIS.Confluent.Params;
-using Microsoft.Liftr.ACIS.Logging;
-using Microsoft.Liftr.ACIS.Relay;
-using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Microsoft.Liftr.ACIS.Confluent.Configuration
+namespace Microsoft.Liftr.ACIS.Confluent.Partner
 {
-    public class FetchSaasResourceIdOperation : AcisSMEOperation
+    /// <summary>
+    /// Use Geneva action to invoke the webhook to inform Partner about activation of resource failed
+    /// </summary>
+    public class ActivationFailedWebhookOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Get Saas ResourceId"; }
+        public override string OperationName { get => "Activation Resource Failed Webhook"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
         /// </summary>
-        public override IAcisSMEOperationGroup OperationGroup { get => new ConfigurationOperationGroup(); }
+        public override IAcisSMEOperationGroup OperationGroup { get => new PartnerOperationGroup(); }
 
         /// <summary>
         /// These are the claims required to run this operation.
@@ -69,14 +66,14 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
         /// <summary>
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
-        /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
+        /// for example this class name is FetchInternalMetadata and thus method name is FetchInternalMetadata()
         /// </summary>
-        /// <param name="resourceId">Resource Id. This param is picked from Params attribute in the same order</param>
-        /// <param name="tenantId">Tenant id</param>
-        /// <param name="extension">Management extension</param>
-        /// <param name="updater">Operation progress updater</param>
-        /// <param name="endpoint">Current end point</param>
+        /// <param name="resourceId"></param>
+        /// <param name="tenantId"></param>
+        /// <param name="extension"></param>
+        /// <param name="updater"></param>
+        /// <param name="endpoint"></param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse FetchSaasResourceId(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.FetchSaasResourceIdOperationName, extension, updater, endpoint, parameters: Common.Utilities.CombineResourceIdTenantId(resourceId, tenantId)).Result;
+        public IAcisSMEOperationResponse ActivationFailedWebhook(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.ActivationFailedWebhookOperationName, extension, updater, endpoint, parameters: Common.Utilities.CombineResourceIdTenantId(resourceId, tenantId)).Result;
     }
 }

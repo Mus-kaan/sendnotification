@@ -8,6 +8,8 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
     {
         public const string ACISStorConn = "ACISStorConn";
         public const string FetchSaasResourceIdOperationName = "FetchSaasResourceId";
-        public const string FetchInternalMetadataOperationName = "FetchResourceInfo";
+        public const string FetchResourceInfoOperationName = "FetchResourceInfo";
+        public const string ActivationFailedWebhookOperationName = "ActivationFailedWebhook";
+        public const string DeleteResourceFailedWebhookOperationName = "DeleteResourceFailedWebhook";
     }
 }

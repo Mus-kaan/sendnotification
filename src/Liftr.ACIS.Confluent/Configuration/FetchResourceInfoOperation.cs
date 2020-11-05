@@ -2,16 +2,10 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
-using Microsoft.Liftr.ACIS.Common;
 using Microsoft.Liftr.ACIS.Confluent.Common;
 using Microsoft.Liftr.ACIS.Confluent.Params;
-using Microsoft.Liftr.ACIS.Logging;
-using Microsoft.Liftr.ACIS.Relay;
-using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Microsoft.Liftr.ACIS.Confluent.Configuration
 {
@@ -77,49 +71,6 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse FetchResourceInfo(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
-        {
-            return FetchResourceInfoAsync(resourceId, tenantId, extension, updater, endpoint).Result;
-        }
-
-        public async Task<IAcisSMEOperationResponse> FetchResourceInfoAsync(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
-        {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
-
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            if (updater == null)
-            {
-                throw new ArgumentNullException(nameof(updater));
-            }
-
-            var logger = new AcisLogger(extension, updater, endpoint);
-
-            logger.LogInfo("Loading ACIS storage account connection string from key vault ...");
-            logger.LogInfo($"Secret Identifiers: {endpoint.Secrets.Identifiers.ToJson()}");
-            var secret = await endpoint.Secrets.GetSecretAsync(Constants.ACISStorConn);
-
-            ACISOperationStorageOptions options = new ACISOperationStorageOptions()
-            {
-                StorageAccountConnectionString = secret,
-            };
-
-            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
-            var result = await coordinator.StartWorkAsync(Constants.FetchInternalMetadataOperationName, parameters: $"{resourceId}~GA~{tenantId}");
-            if (result.Succeeded)
-            {
-                return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
-            }
-            else
-            {
-                return AcisSMEOperationResponseExtensions.SpecificErrorResponse(result.Result);
-            }
-        }
+        public IAcisSMEOperationResponse FetchResourceInfo(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.FetchResourceInfoOperationName, extension, updater, endpoint, parameters: Common.Utilities.CombineResourceIdTenantId(resourceId, tenantId)).Result;
     }
 }
