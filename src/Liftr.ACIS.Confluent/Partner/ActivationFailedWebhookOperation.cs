@@ -74,6 +74,6 @@ namespace Microsoft.Liftr.ACIS.Confluent.Partner
         /// <param name="updater"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse ActivationFailedWebhook(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.ActivationFailedWebhookOperationName, extension, updater, endpoint, parameters: Common.Utilities.CombineResourceIdTenantId(resourceId, tenantId)).Result;
+        public IAcisSMEOperationResponse ActivationFailedWebhook(string resourceId, string tenantId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOpertionAsync(Constants.ActivationFailedWebhookOperationName, extension, updater, endpoint).Result;
     }
 }

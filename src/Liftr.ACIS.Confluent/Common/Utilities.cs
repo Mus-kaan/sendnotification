@@ -24,23 +24,14 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
         /// <param name="endpoint">ACIS endpoint</param>
         /// <param name="operationId">Opertion id. Its optional</param>
         /// <returns></returns>
-        public static async Task<IAcisSMEOperationResponse> CallOpertionAsync(string operationName,  IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null, string parameters = null, string operationId = null)
+        public static async Task<IAcisSMEOperationResponse> CallOpertionAsync(
+            string operationName,
+            IAcisServiceManagementExtension extension = null,
+            IAcisSMEOperationProgressUpdater updater = null,
+            IAcisSMEEndpoint endpoint = null,
+            string parameters = null,
+            string operationId = null)
         {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
-
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            if (updater == null)
-            {
-                throw new ArgumentNullException(nameof(updater));
-            }
-
             var logger = new AcisLogger(extension, updater, endpoint);
 
             logger.LogInfo("Loading ACIS storage account connection string from key vault ...");
@@ -62,6 +53,29 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
             {
                 return AcisSMEOperationResponseExtensions.SpecificErrorResponse(result.Result);
             }
+        }
+
+        /// <summary>
+        /// Call ACIS backend
+        /// </summary>
+        /// <param name="operationName">Operation Name</param>
+        /// <param name="extension">Acis service management extension</param>
+        /// <param name="updater">Progress updater</param>
+        /// <param name="endpoint">ACIS endpoint</param>
+        /// <returns></returns>
+        public static async Task<IAcisSMEOperationResponse> CallOpertionAsync(
+            string operationName,
+            IAcisServiceManagementExtension extension = null,
+            IAcisSMEOperationProgressUpdater updater = null,
+            IAcisSMEEndpoint endpoint = null)
+        {
+            var logger = new AcisLogger(extension, updater, endpoint);
+
+            logger.LogInfo("Loading ACIS storage account connection string from key vault ...");
+            logger.LogInfo($"Secret Identifiers: {endpoint.Secrets.Identifiers.ToJson()}");
+            var secret = await endpoint.Secrets.GetSecretAsync(Constants.ACISStorConn);
+
+            return AcisSMEOperationResponseExtensions.StandardSuccessResponse($"Not enabled yet for {operationName}");
         }
 
         /// <summary>
