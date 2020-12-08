@@ -8,12 +8,16 @@ using Microsoft.Liftr.ACIS.Relay;
 using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Microsoft.Liftr.ACIS.Confluent.Common
 {
     public static class Utilities
     {
+        public const string ValueSeparator = "~GA~";
+
         /// <summary>
         /// Call ACIS backend
         /// </summary>
@@ -43,7 +47,7 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
                 StorageAccountConnectionString = secret,
             };
 
-            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
+            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(300));
             var result = await coordinator.StartWorkAsync(operationName, parameters: parameters);
             if (result.Succeeded)
             {
@@ -84,6 +88,28 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
         /// <param name="resourceId"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        public static string CombineResourceIdTenantId(string resourceId, string tenantId) => $"{resourceId}~GA~{tenantId}";
+        public static string CombineResourceIdTenantId(string resourceId, string tenantId) => $"{resourceId}{ValueSeparator}{tenantId}";
+
+        /// <summary>
+        /// Combine values
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static string ConcatParams(params string[] values)
+        {
+            if (!values.Any())
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append(values[0]);
+            for (int i = 1; i < values.Length; i++)
+            {
+                builder.Append(ValueSeparator).Append(values[i]);
+            }
+
+            return builder.ToString();
+        }
     }
 }
