@@ -13,5 +13,6 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
         public const string DeleteResourceFailedWebhookOperationName = "DeleteResourceFailedWebhook";
         public const string UpdateResourceConfigOperationName = "UpdateResourceConfig";
         public const string FetchListOfResourcesOperationName = "FetchListOfResources";
+        public const string ConfluentJITScope = "LiftrConfluent";
     }
 }

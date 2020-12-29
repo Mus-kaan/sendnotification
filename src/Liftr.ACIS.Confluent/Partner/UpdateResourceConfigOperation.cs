@@ -35,7 +35,7 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
             {
                 return new[]
                 {
-                    AcisSMESecurityGroup.PlatformServiceViewer,
+                    AcisSMESecurityGroup.ClientPlatformServiceAdministrator(Constants.ConfluentJITScope),
                 };
             }
         }
@@ -67,8 +67,8 @@ namespace Microsoft.Liftr.ACIS.Confluent.Configuration
                 {
                     ParamRefFromParam.Get<ResourceIdParameter>(),
                     ParamRefFromParam.Get<TenantIdParameter>(),
-                    ParamRefFromParam.Get<XPathParameter>(),
-                    ParamRefFromParam.Get<XPathValueParameter>(),
+                    ParamRefFromParam.Get<JPathParameter>(),
+                    ParamRefFromParam.Get<JPathValueParameter>(),
                 };
             }
         }
