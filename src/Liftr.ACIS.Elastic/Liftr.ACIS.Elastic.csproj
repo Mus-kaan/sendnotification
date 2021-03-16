@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(LiftrACISClassLibraryTargetFramework)</TargetFramework>
+    <AssemblyName>Microsoft.Liftr.ACIS.Elastic</AssemblyName>
+    <RootNamespace>Microsoft.Liftr.ACIS.Elastic</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AcisExtensionSDK" Version="$(PackageVersion_AcisExtensionSDK)" />
+    <PackageReference Include="Microsoft.Liftr.ACIS.Common" Version="$(PackageVersion_Microsoft_Liftr_ACIS_Common)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="*.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <GASMEPackageInputDir>$(MSBuildProjectDirectory)\bin\$(Configuration)\$(targetframework)</GASMEPackageInputDir>
+    <GASMEPackageOutputDir>$(MSBuildProjectDirectory)\bin\GenevaActionPackages</GASMEPackageOutputDir>
+    <GAPackageName>$(AssemblyName)</GAPackageName>
+    <GASMEAssembly>$(AssemblyName).dll</GASMEAssembly>
+    <Authors>liftrdev</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <GAPackageEnvironment Include="Test">
+      <!-- No input and output directories specified. We take the values defined above for GASMEPackageInputDir and  GASMEPackageOutputDir-->
+      <SMEConfigFile>ElasticExtension.Test.config</SMEConfigFile>
+    </GAPackageEnvironment>
+    <GAPackageEnvironment Include="Public">
+      <!-- No input and output directories specified. We take the values defined above for GASMEPackageInputDir and  GASMEPackageOutputDir-->
+      <SMEConfigFile>ElasticExtension.Prod.config</SMEConfigFile>
+    </GAPackageEnvironment>
+  </ItemGroup>
+</Project>
