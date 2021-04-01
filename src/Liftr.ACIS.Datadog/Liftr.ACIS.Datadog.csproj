@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="AcisExtensionSDK" Version="$(PackageVersion_AcisExtensionSDK)" />
     <PackageReference Include="Microsoft.Liftr.ACIS.Common" Version="$(PackageVersion_Microsoft_Liftr_ACIS_Common)" />
+    <PackageReference Include="Microsoft.Liftr.ACIS.Contracts" Version="$(PackageVersion_Microsoft_Liftr_ACIS_Contracts)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Liftr.ACIS.Logging\Liftr.ACIS.Logging.csproj" />
