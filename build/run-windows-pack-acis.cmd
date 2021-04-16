@@ -15,8 +15,12 @@ set _ENV=Test
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Liftr_%_ENV% -SMEConfig:LiftrExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Datadog\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Datadog_%_ENV% -SMEConfig:DatadogExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Datadog.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Confluent\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Confluent_%_ENV% -SMEConfig:ConfluentExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Confluent.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Logz\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Logz_%_ENV% -SMEConfig:LogzExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Logz.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Elastic\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Elastic_%_ENV% -SMEConfig:ElasticExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Elastic.dll
 
 set _ENV=Prod
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Liftr_%_ENV% -SMEConfig:LiftrExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Datadog\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Datadog_%_ENV% -SMEConfig:DatadogExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Datadog.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Confluent\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Confluent_%_ENV% -SMEConfig:ConfluentExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Confluent.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Logz\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Logz_%_ENV% -SMEConfig:LogzExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Logz.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Elastic\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Elastic_%_ENV% -SMEConfig:ElasticExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Elastic.dll
