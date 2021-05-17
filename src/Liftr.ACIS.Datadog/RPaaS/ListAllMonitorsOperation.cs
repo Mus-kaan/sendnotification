@@ -85,7 +85,7 @@ namespace Microsoft.Liftr.ACIS
                 StorageAccountConnectionString = secret,
             };
 
-            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
+            ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromMinutes(5));
             var result = await coordinator.StartWorkAsync(nameof(ListAllMonitors), parameters: subscriptionId);
             if (result.Succeeded)
             {
