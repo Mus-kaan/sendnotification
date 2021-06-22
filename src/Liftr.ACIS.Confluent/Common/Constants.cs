@@ -14,5 +14,6 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
         public const string UpdateResourceConfigOperationName = "UpdateResourceConfig";
         public const string FetchListOfResourcesOperationName = "FetchListOfResources";
         public const string ConfluentJITScope = "LiftrConfluent";
+        public const string FetchActiveCustomerEmailOperationName = "FetchActiveUserEmail";
     }
 }
