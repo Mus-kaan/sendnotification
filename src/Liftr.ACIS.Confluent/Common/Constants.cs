@@ -9,6 +9,7 @@ namespace Microsoft.Liftr.ACIS.Confluent.Common
         public const string ACISStorConn = "ACISStorConn";
         public const string FetchSaasResourceIdOperationName = "FetchSaasResourceId";
         public const string FetchResourceInfoOperationName = "FetchResourceInfo";
+        public const string FetchResourceInfoForProviderOperationName = "FetchResourceInfoForProvider";
         public const string ActivationFailedWebhookOperationName = "ActivationFailedWebhook";
         public const string DeleteResourceFailedWebhookOperationName = "DeleteResourceFailedWebhook";
         public const string UpdateResourceConfigOperationName = "UpdateResourceConfig";
