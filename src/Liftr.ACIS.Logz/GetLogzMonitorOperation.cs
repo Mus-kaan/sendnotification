@@ -115,6 +115,11 @@ namespace Microsoft.Liftr.ACIS.Logz
                 StorageAccountConnectionString = secret,
             };
 
+            if (endpoint.Name.Equals(Constants.LocalEndpointName, StringComparison.OrdinalIgnoreCase))
+            {
+                options.OperationNotificationQueueName = Constants.OperationNotificationQueueNameLocal;
+            }
+
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
             var result = await coordinator.StartWorkAsync(nameof(GetLogzMonitor), parameters: monitorResourceId);
             if (result.Succeeded)

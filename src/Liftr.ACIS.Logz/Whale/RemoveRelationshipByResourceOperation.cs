@@ -87,6 +87,11 @@ namespace Microsoft.Liftr.ACIS.Logz
                 StorageAccountConnectionString = secret,
             };
 
+            if (endpoint.Name.Equals(Constants.LocalEndpointName, StringComparison.OrdinalIgnoreCase))
+            {
+                options.OperationNotificationQueueName = Constants.OperationNotificationQueueNameLocal;
+            }
+
             RemoveRelationshipEntityMessage message = new RemoveRelationshipEntityMessage()
             {
                 ResoureId = monitoredresourceId,

@@ -20,9 +20,9 @@ namespace Microsoft.Liftr.ACIS.Logz
     /// Also we need to implement a method with same name, which works as main execute method for this operation.
     /// There is a way to overwrite and implement some other method as main execute, Refer References in section for details.
     /// </summary>
-    public class GetRelationshipsByResourceOperation : AcisSMEOperation
+    public class GetRelationshipsByMonitoredResourceOperation : AcisSMEOperation
     {
-        public override string OperationName => "GetRelationshipsByResource";
+        public override string OperationName => "GetRelationshipsByMonitoredResource";
 
         public override IAcisSMEOperationGroup OperationGroup => new WhaleOperationGroup();
 
@@ -52,12 +52,12 @@ namespace Microsoft.Liftr.ACIS.Logz
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// </summary>
-        public IAcisSMEOperationResponse GetRelationshipsByResource(string monitoredresourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public IAcisSMEOperationResponse GetRelationshipsByMonitoredResource(string monitoredresourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
-            return GetRelationshipsByResourceAsync(monitoredresourceId, extension, updater, endpoint).Result;
+            return GetRelationshipsByMonitoredResourceAsync(monitoredresourceId, extension, updater, endpoint).Result;
         }
 
-        private async Task<IAcisSMEOperationResponse> GetRelationshipsByResourceAsync(string monitoredresourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        private async Task<IAcisSMEOperationResponse> GetRelationshipsByMonitoredResourceAsync(string monitoredresourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
             if (extension == null)
             {
@@ -85,8 +85,13 @@ namespace Microsoft.Liftr.ACIS.Logz
                 StorageAccountConnectionString = secret,
             };
 
+            if (endpoint.Name.Equals(Constants.LocalEndpointName, StringComparison.OrdinalIgnoreCase))
+            {
+                options.OperationNotificationQueueName = Constants.OperationNotificationQueueNameLocal;
+            }
+
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
-            var result = await coordinator.StartWorkAsync(nameof(GetRelationshipsByResource), parameters: monitoredresourceId);
+            var result = await coordinator.StartWorkAsync(nameof(GetRelationshipsByMonitoredResource), parameters: monitoredresourceId);
             if (result.Succeeded)
             {
                 return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
