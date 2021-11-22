@@ -4,7 +4,7 @@
 
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 
-namespace Microsoft.Liftr.ACIS
+namespace Microsoft.Liftr.ACIS.Elastic.Params
 {
     public class MonitorResourceIdTextParameter : AcisSMETextParameter
     {

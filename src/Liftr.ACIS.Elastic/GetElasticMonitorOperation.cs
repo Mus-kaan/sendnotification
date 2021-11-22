@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 
 using Microsoft.Liftr.ACIS.Common;
+using Microsoft.Liftr.ACIS.Elastic.Params;
 using Microsoft.Liftr.ACIS.Logging;
 using Microsoft.Liftr.ACIS.Relay;
 using Microsoft.Liftr.Contracts;
