@@ -21,21 +21,23 @@ namespace Microsoft.Liftr.ACIS.Logz
     /// Also we need to implement a method with same name, which works as main execute method for this operation.
     /// There is a way to overwrite and implement some other method as main execute, Refer References in section for details.
     /// </summary>
-    public class UpdateMonitorCreationStatusByMonitorOperation : AcisSMEOperation
+    public class DeleteMonitorResourceByMonitorOperation : AcisSMEOperation
     {
-        public override string OperationName => "UpdateMonitorCreationStatusByMonitor";
+        public override string OperationName => "DeleteMonitorResourceByMonitor";
 
-        public override IAcisSMEOperationGroup OperationGroup => new DBOperationGroup();
+        public override IAcisSMEOperationGroup OperationGroup => new ResourceManagementOperationGroup();
 
         public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceAdministrator };
 
         public override IEnumerable<IAcisSMEParameterRef> Parameters => new[]
             {
                 ParamRefFromParam.Get<MonitorResourceIdTextParameter>(isOptional: false),
-                ParamRefFromParam.Get<MonitorCreationStatusObjectTextParameter>(isOptional: false),
-                ParamRefFromParam.Get<APITokenBoolParameter>(isOptional: false),
-                ParamRefFromParam.Get<ShippingTokenBoolParameter>(isOptional: false),
-                ParamRefFromParam.Get<MarketplaceResourceIdBoolParameter>(isOptional: false),
+                ParamRefFromParam.Get<ResourceTypeTextParameter>(isOptional: false),
+                ParamRefFromParam.Get<TenantLevelMarketplaceResourceBoolParameter>(isOptional: false),
+                ParamRefFromParam.Get<DeleteMarketplaceResourceBoolParameter>(isOptional: false),
+                ParamRefFromParam.Get<NotifyPartnerBoolParameter>(isOptional: false),
+                ParamRefFromParam.Get<ForcefulDeleteBoolParameter>(isOptional: false),
+                ParamRefFromParam.Get<RPaaSDeleteBoolParameter>(isOptional: false),
             };
 
         /// <summary>
@@ -57,12 +59,12 @@ namespace Microsoft.Liftr.ACIS.Logz
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// </summary>
-        public IAcisSMEOperationResponse UpdateMonitorCreationStatusByMonitor(string monitorId, string monitorCreationStatusObject, bool IsUpdateAPIToken, bool IsUpdateShippingToken, bool IsUpdateMarketplaceResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public IAcisSMEOperationResponse DeleteMonitorResourceByMonitor(string monitorId, string resourceType, bool IsTenantLevelMarketplaceResource, bool IsDeleteMarketplaceResource, bool IsNotifyPartner, bool IsForcefulDelete, bool IsRPaaSDelete, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
-            return UpdateMonitorCreationStatusByMonitorAsync(monitorId, monitorCreationStatusObject, IsUpdateAPIToken, IsUpdateShippingToken, IsUpdateMarketplaceResourceId, extension, updater, endpoint).Result;
+            return DeleteMonitorResourceByMonitorAsync(monitorId, resourceType, IsTenantLevelMarketplaceResource, IsDeleteMarketplaceResource, IsNotifyPartner, IsForcefulDelete, IsRPaaSDelete, extension, updater, endpoint).Result;
         }
 
-        private async Task<IAcisSMEOperationResponse> UpdateMonitorCreationStatusByMonitorAsync(string monitorId, string monitorCreationStatusObject, bool IsUpdateAPIToken, bool IsUpdateShippingToken, bool IsUpdateMarketplaceResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        private async Task<IAcisSMEOperationResponse> DeleteMonitorResourceByMonitorAsync(string monitorId, string resourceType, bool IsTenantLevelMarketplaceResource, bool IsDeleteMarketplaceResource, bool IsNotifyPartner, bool IsForcefulDelete, bool IsRPaaSDelete, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
             if (extension == null)
             {
@@ -95,17 +97,19 @@ namespace Microsoft.Liftr.ACIS.Logz
                 options.OperationNotificationQueueName = Constants.OperationNotificationQueueNameLocal;
             }
 
-            UpdateMonitorCreationStatusMessage message = new UpdateMonitorCreationStatusMessage()
+            DeleteMonitorResourceMessage message = new DeleteMonitorResourceMessage()
             {
                 MonitorId = monitorId,
-                MonitorCreationStatusObject = monitorCreationStatusObject,
-                IsUpdateAPIToken = IsUpdateAPIToken,
-                IsUpdateShippingToken = IsUpdateShippingToken,
-                IsUpdateMarketplaceResourceId = IsUpdateMarketplaceResourceId,
+                ResourceType = resourceType,
+                IsTenantLevelMarketplaceResource = IsTenantLevelMarketplaceResource,
+                IsDeleteMarketplaceResource = IsDeleteMarketplaceResource,
+                IsNotifyPartner = IsNotifyPartner,
+                IsForcefulDelete = IsForcefulDelete,
+                IsRPaaSDelete = IsRPaaSDelete,
             };
 
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(120));
-            var result = await coordinator.StartWorkAsync(nameof(UpdateMonitorCreationStatusByMonitor), parameters: message.ToJson());
+            var result = await coordinator.StartWorkAsync(nameof(DeleteMonitorResourceByMonitor), parameters: message.ToJson());
             if (result.Succeeded)
             {
                 return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);

@@ -2,9 +2,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PackageVersion_AcisExtensionSDK>1.0.4.1310</PackageVersion_AcisExtensionSDK>
-    <PackageVersion_Microsoft_Liftr_ACIS_Common>6.0.1370-x</PackageVersion_Microsoft_Liftr_ACIS_Common>
-    <PackageVersion_Microsoft_Liftr_ACIS_Contracts>6.0.1370-x</PackageVersion_Microsoft_Liftr_ACIS_Contracts>
-    <PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>6.0.1370-x</PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>
-    <PackageVersion_Microsoft_Liftr_Logging_StaticLogger>6.0.1370-x</PackageVersion_Microsoft_Liftr_Logging_StaticLogger>
+    <PackageVersion_Microsoft_Liftr_ACIS_Common>6.0.1378-x</PackageVersion_Microsoft_Liftr_ACIS_Common>
+    <PackageVersion_Microsoft_Liftr_ACIS_Contracts>6.0.1378-x</PackageVersion_Microsoft_Liftr_ACIS_Contracts>
+    <PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>6.0.1378-x</PackageVersion_Microsoft_Liftr_ACIS_Logging_Abstractions>
+    <PackageVersion_Microsoft_Liftr_Logging_StaticLogger>6.0.1378-x</PackageVersion_Microsoft_Liftr_Logging_StaticLogger>
   </PropertyGroup>
 </Project>
