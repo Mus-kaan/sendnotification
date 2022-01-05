@@ -2,16 +2,12 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Microsoft.Liftr.ACIS.Logz
 {
     public static class Constants
     {
+        public const string LogzNamespace = "LiftrLogz";
+
         public static string OperationNotificationQueueNameLocal { get; set; } = "acisnotification-local";
 
         public static string LocalEndpointName { get; set; } = "Local";

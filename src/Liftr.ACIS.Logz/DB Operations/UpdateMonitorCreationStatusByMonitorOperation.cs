@@ -27,7 +27,7 @@ namespace Microsoft.Liftr.ACIS.Logz
 
         public override IAcisSMEOperationGroup OperationGroup => new DBOperationGroup();
 
-        public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceAdministrator };
+        public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceViewer };
 
         public override IEnumerable<IAcisSMEParameterRef> Parameters => new[]
             {
