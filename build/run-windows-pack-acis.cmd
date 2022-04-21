@@ -18,6 +18,7 @@ set _ENV=Test
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Logz\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Logz_%_ENV% -SMEConfig:LogzExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Logz.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Elastic\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Elastic_%_ENV% -SMEConfig:ElasticExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Elastic.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Dynatrace\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Dynatrace_%_ENV% -SMEConfig:DynatraceExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Dynatrace.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Nginx\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Nginx%_ENV% -SMEConfig:NginxExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Nginx.dll
 
 set _ENV=Prod
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Liftr_%_ENV% -SMEConfig:LiftrExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.dll
@@ -26,3 +27,4 @@ set _ENV=Prod
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Logz\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Logz_%_ENV% -SMEConfig:LogzExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Logz.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Elastic\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Elastic_%_ENV% -SMEConfig:ElasticExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Elastic.dll
 %ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Dynatrace\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Dynatrace_%_ENV% -SMEConfig:DynatraceExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Dynatrace.dll
+%ACISPackageManager% BuildPackage -InputDir:%~dp0..\src\Liftr.ACIS.Nginx\bin\Release\net462 -OutputDir:%~dp0..\out\AcisPackages\ -PackageName:Nginx%_ENV% -SMEConfig:NginxExtension.%_ENV%.config -SMEAssembly:Microsoft.Liftr.ACIS.Nginx.dll

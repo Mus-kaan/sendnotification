@@ -25,6 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Elastic", "Liftr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Dynatrace", "Liftr.ACIS.Dynatrace\Liftr.ACIS.Dynatrace.csproj", "{9B9A21F4-04BA-4DBD-8404-D5DD755E5AF6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liftr.ACIS.Nginx", "Liftr.ACIS.Nginx\Liftr.ACIS.Nginx.csproj", "{C17D8360-2823-47A7-A14F-8CFAF5AE44C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E81BCABB-58BB-4803-B098-5D25FA78B837}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +66,10 @@ Global
 		{9B9A21F4-04BA-4DBD-8404-D5DD755E5AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B9A21F4-04BA-4DBD-8404-D5DD755E5AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B9A21F4-04BA-4DBD-8404-D5DD755E5AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C17D8360-2823-47A7-A14F-8CFAF5AE44C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C17D8360-2823-47A7-A14F-8CFAF5AE44C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C17D8360-2823-47A7-A14F-8CFAF5AE44C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C17D8360-2823-47A7-A14F-8CFAF5AE44C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
