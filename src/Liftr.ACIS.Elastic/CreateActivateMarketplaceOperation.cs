@@ -119,7 +119,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
             };
 
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
-            var result = await coordinator.StartWorkAsync(nameof(CreateActivateMarketplace), parameters: marketplaceSaasId);
+            var result = await coordinator.StartWorkAsync(nameof(CreateActivateMarketplace), parameters: ConcatParams(marketplaceSaasId, elasticResourceId));
             if (result.Succeeded)
             {
                 return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
@@ -128,6 +128,23 @@ namespace Microsoft.Liftr.ACIS.Elastic
             {
                 return AcisSMEOperationResponseExtensions.SpecificErrorResponse(result.Result);
             }
+        }
+
+        private static string ConcatParams(params string[] values)
+        {
+            if (!values.Any())
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append(values[0]);
+            for (int i = 1; i < values.Length; i++)
+            {
+                builder.Append("~GA~").Append(values[i]);
+            }
+
+            return builder.ToString();
         }
     }
 }
