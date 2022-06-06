@@ -59,6 +59,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// </summary>
         public override IEnumerable<IAcisSMEParameterRef> Parameters => new[]
             {
+                ParamRefFromParam.Get<SubscriptionIdTextParameter>(isOptional: false),
                 ParamRefFromParam.Get<MarketplaceSaasIdTextParameter>(isOptional: false),
                 ParamRefFromParam.Get<MonitorResourceIdTextParameter>(isOptional: false),
             };
@@ -67,9 +68,9 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// </summary>
-        public IAcisSMEOperationResponse UpdateMarketplaceEntities(string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public IAcisSMEOperationResponse UpdateMarketplaceEntities(string oldMarketplaceSaaSId, string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
-            return UpdateMarketplaceEntitiesAsync(marketplaceSaasId, elasticResourceId, extension, updater, endpoint).Result;
+            return UpdateMarketplaceEntitiesAsync(oldMarketplaceSaaSId, marketplaceSaasId, elasticResourceId, extension, updater, endpoint).Result;
         }
 
         /// <summary>
@@ -77,6 +78,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is GetMonitorResourceOperation and thus method name is Greetings()
         /// </summary>
+        /// <param name="oldMarketplaceSaaSId"></param>
         /// <param name="marketplaceSaasId"></param>
         /// <param name="elasticResourceId"></param>
         /// <param name="extension"></param>
@@ -84,7 +86,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// <param name="endpoint"></param>
         /// <returns></returns>
 #pragma warning disable CA1822 // Mark members as static
-        public async Task<IAcisSMEOperationResponse> UpdateMarketplaceEntitiesAsync(string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public async Task<IAcisSMEOperationResponse> UpdateMarketplaceEntitiesAsync(string oldMarketplaceSaaSId, string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
 #pragma warning restore CA1822 // Mark members as static
         {
             if (extension == null)
@@ -119,7 +121,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
             };
 
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
-            var result = await coordinator.StartWorkAsync(nameof(UpdateMarketplaceEntities), parameters: ConcatParams(marketplaceSaasId, elasticResourceId));
+            var result = await coordinator.StartWorkAsync(nameof(UpdateMarketplaceEntities), parameters: ConcatParams(oldMarketplaceSaaSId, marketplaceSaasId, elasticResourceId));
             if (result.Succeeded)
             {
                 return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
