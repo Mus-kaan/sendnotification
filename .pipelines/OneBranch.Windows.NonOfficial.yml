@@ -105,15 +105,6 @@ extends:
                   !**\Deployment.Runner\**
                 TargetFolder: '$(ob_outputDirectory)\build\bin'
 
-            - task: onebranch.pipeline.signing@1 # https://aka.ms/obpipelines/signing
-              displayName: "Sign build outputs"
-              inputs:
-                command: "sign"
-                signing_environment: "azure-ado"
-                signing_profile: "internal_azure_service"
-                files_to_sign: "**/*.exe;**/*.dll"
-                search_root: '$(ob_outputDirectory)\build\bin'
-
             - task: CmdLine@2
               displayName: 'Package'
               inputs:
