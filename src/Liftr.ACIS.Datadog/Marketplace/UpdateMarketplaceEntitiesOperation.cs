@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 
 using Microsoft.Liftr.ACIS.Common;
-using Microsoft.Liftr.ACIS.Elastic.Params;
+using Microsoft.Liftr.ACIS.Datadog.Params;
 using Microsoft.Liftr.ACIS.Logging;
 using Microsoft.Liftr.ACIS.Relay;
 using Microsoft.Liftr.Contracts;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Liftr.ACIS.Elastic
+namespace Microsoft.Liftr.ACIS.Datadog
 {
     public class UpdateMarketplaceEntitiesOperation : AcisSMEOperation
     {
@@ -27,7 +27,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
         /// </summary>
-        public override IAcisSMEOperationGroup OperationGroup { get => new ElasticOperationGroup(); }
+        public override IAcisSMEOperationGroup OperationGroup { get => new MarketplaceOperationGroup(); }
 
         /// <summary>
         /// These are the claims required to run this operation.
@@ -39,7 +39,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
             {
                 return new[]
                 {
-                    AcisSMESecurityGroup.PlatformServiceAdministrator,
+                    AcisSMESecurityGroup.PlatformServiceViewer,
                 };
             }
         }
@@ -68,9 +68,9 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// </summary>
-        public IAcisSMEOperationResponse UpdateMarketplaceEntities(string oldMarketplaceSaaSId, string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public IAcisSMEOperationResponse UpdateMarketplaceEntities(string oldMarketplaceSaaSId, string marketplaceSaasId, string dataogResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
         {
-            return UpdateMarketplaceEntitiesAsync(oldMarketplaceSaaSId, marketplaceSaasId, elasticResourceId, extension, updater, endpoint).Result;
+            return UpdateMarketplaceEntitiesAsync(oldMarketplaceSaaSId, marketplaceSaasId, dataogResourceId, extension, updater, endpoint).Result;
         }
 
         /// <summary>
@@ -80,13 +80,13 @@ namespace Microsoft.Liftr.ACIS.Elastic
         /// </summary>
         /// <param name="oldMarketplaceSaaSId"></param>
         /// <param name="marketplaceSaasId"></param>
-        /// <param name="elasticResourceId"></param>
+        /// <param name="datadogResourceId"></param>
         /// <param name="extension"></param>
         /// <param name="updater"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
 #pragma warning disable CA1822 // Mark members as static
-        public async Task<IAcisSMEOperationResponse> UpdateMarketplaceEntitiesAsync(string oldMarketplaceSaaSId, string marketplaceSaasId, string elasticResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
+        public async Task<IAcisSMEOperationResponse> UpdateMarketplaceEntitiesAsync(string oldMarketplaceSaaSId, string marketplaceSaasId, string datadogResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null)
 #pragma warning restore CA1822 // Mark members as static
         {
             if (extension == null)
@@ -121,7 +121,7 @@ namespace Microsoft.Liftr.ACIS.Elastic
             };
 
             ACISWorkCoordinator coordinator = new ACISWorkCoordinator(options, new SystemTimeSource(), logger, timeout: TimeSpan.FromSeconds(60));
-            var result = await coordinator.StartWorkAsync(nameof(UpdateMarketplaceEntities), parameters: ConcatParams(oldMarketplaceSaaSId, marketplaceSaasId, elasticResourceId));
+            var result = await coordinator.StartWorkAsync(nameof(UpdateMarketplaceEntities), parameters: ConcatParams(oldMarketplaceSaaSId, marketplaceSaasId, datadogResourceId));
             if (result.Succeeded)
             {
                 return AcisSMEOperationResponseExtensions.StandardSuccessResponse(result.Result);
