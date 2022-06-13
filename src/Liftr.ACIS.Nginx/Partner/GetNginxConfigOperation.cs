@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Microsoft.Liftr.ACIS.Nginx.Partner
 {
-    public class GetOrgForSubIdOperation : AcisSMEOperation
+    public class GetNginxConfigOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Get Organization"; }
+        public override string OperationName { get => "Get Nginx Config"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
@@ -58,7 +58,7 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
         /// </summary>
         public override IEnumerable<IAcisSMEParameterRef> Parameters
         {
-            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<SubscriptionIdTextParameter>(isOptional: false) }; }
+            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<DeploymentResourceIdTextParameter>(isOptional: false) }; }
         }
 
         /// <summary>
@@ -66,11 +66,11 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
         /// </summary>
-        /// <param name="subscriptionId">Resource Id. This param is picked from Params attribute in the same order</param>
+        /// <param name="deploymentResourceId">Resource Id. This param is picked from Params attribute in the same order</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse GetOrgForSubId(string subscriptionId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetPartnerOrgInfo, extension, updater, endpoint, parameters: subscriptionId).Result;
+        public IAcisSMEOperationResponse GetNginxConfig(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetNginxConfig, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }

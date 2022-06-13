@@ -8,19 +8,19 @@ using Microsoft.Liftr.ACIS.Nginx.Parameters;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System.Collections.Generic;
 
-namespace Microsoft.Liftr.ACIS.Nginx.Partner
+namespace Microsoft.Liftr.ACIS.Nginx.RPaaS
 {
-    public class GetOrgForSubIdOperation : AcisSMEOperation
+    public class CleanupRPaaSEntityOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Get Organization"; }
+        public override string OperationName { get => "Cleanup Broken RPaaS Entity"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
         /// </summary>
-        public override IAcisSMEOperationGroup OperationGroup { get => new PartnerOperationGroup(); }
+        public override IAcisSMEOperationGroup OperationGroup { get => new RPaaSOperationGroup(); }
 
         /// <summary>
         /// These are the claims required to run this operation.
@@ -32,7 +32,7 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
             {
                 return new[]
                 {
-                    AcisSMESecurityGroup.PlatformServiceViewer,
+                    AcisSMESecurityGroup.ClientPlatformServiceAdministrator(Constants.LiftrNginxNamespace),
                 };
             }
         }
@@ -58,7 +58,13 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
         /// </summary>
         public override IEnumerable<IAcisSMEParameterRef> Parameters
         {
-            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<SubscriptionIdTextParameter>(isOptional: false) }; }
+            get
+            {
+                return new IAcisSMEParameterRef[]
+                {
+                    ParamRefFromParam.Get<DeploymentResourceIdTextParameter>(isOptional: false),
+                };
+            }
         }
 
         /// <summary>
@@ -66,11 +72,11 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
         /// </summary>
-        /// <param name="subscriptionId">Resource Id. This param is picked from Params attribute in the same order</param>
+        /// <param name="deploymentResourceId">Resource Id. This param is picked from Params attribute in the same order</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse GetOrgForSubId(string subscriptionId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetPartnerOrgInfo, extension, updater, endpoint, parameters: subscriptionId).Result;
+        public IAcisSMEOperationResponse CleanupRPaaSEntity(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.CleanupBrokenRPaaSEntityAsync, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }

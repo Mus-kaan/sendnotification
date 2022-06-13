@@ -16,7 +16,7 @@ namespace Microsoft.Liftr.ACIS
 {
     public class NginxManagementExtension : AcisServiceManagementExtension
     {
-        public const string ServiceNameConst = "Liftr Nginx";
+        public const string ServiceNameConst = "LiftrNginx";
 
         public override string ServiceName => ServiceNameConst;
 

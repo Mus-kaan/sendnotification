@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+using Microsoft.Liftr.ACIS.Contracts;
 using Microsoft.Liftr.ACIS.Nginx.Common;
 using Microsoft.Liftr.ACIS.Nginx.Parameters;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
@@ -9,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Microsoft.Liftr.ACIS.Nginx.Partner
 {
-    public class FetchListOfDeploymentsForSubIdOperation : AcisSMEOperation
+    public class GetNginxDeploymentFromPartnerOperation : AcisSMEOperation
     {
         /// <summary>
         /// Name of the operation. This is prominently visible from Jarvis. One search an operation by name.
         /// </summary>
-        public override string OperationName { get => "Get List of Deployments from Partner"; }
+        public override string OperationName { get => "Get Deployment from Partner"; }
 
         /// <summary>
         /// Each operation belongs to an operation group. This is how we associate an operation with operation group.
@@ -55,22 +56,21 @@ namespace Microsoft.Liftr.ACIS.Nginx.Partner
         /// This controls all input parameters to an operation. For current operation we do not have any input parameters.
         /// Look at examples mentioned in the end of this tutorial to see how different parameters can be used.
         /// </summary>
-        public override IEnumerable<IAcisSMEParameterRef> Parameters
-        {
-            get { return new IAcisSMEParameterRef[] { ParamRefFromParam.Get<SubscriptionIdTextParameter>(isOptional: false), ParamRefFromParam.Get<ResourceGroupNameTextParameter>(isOptional: false) }; }
-        }
+        public override IEnumerable<IAcisSMEParameterRef> Parameters => new[]
+            {
+                ParamRefFromParam.Get<DeploymentResourceIdTextParameter>(isOptional: false),
+            };
 
         /// <summary>
         /// This is main execute method for the operation.
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
         /// </summary>
-        /// <param name="subscriptionId">Subscription Id. This param is picked from Params attribute in the same order</param>
-        /// <param name="resourceGroup">Resource group name</param>
+        /// <param name="deploymentResourceId">Resource Id. This param is picked from Params attribute in the same order</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse FetchListOfDeploymentsForSubId(string subscriptionId, string resourceGroup, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(Constants.ListPartnerDeployments, extension, updater, endpoint, parameters: Common.Utilities.ConcatParams(subscriptionId, resourceGroup)).Result;
+        public IAcisSMEOperationResponse GetNginxDeploymentFromPartner(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetNginxPartnerDeployment, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }

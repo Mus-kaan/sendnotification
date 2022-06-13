@@ -2,18 +2,13 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
-using Microsoft.Liftr.ACIS.Common;
-using Microsoft.Liftr.ACIS.Logging;
+using Microsoft.Liftr.ACIS.Contracts;
 using Microsoft.Liftr.ACIS.Nginx.Common;
 using Microsoft.Liftr.ACIS.Nginx.Parameters;
-using Microsoft.Liftr.ACIS.Relay;
-using Microsoft.Liftr.Contracts;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Microsoft.Liftr.ACIS.Nginx.RPaaS
+namespace Microsoft.Liftr.ACIS.Nginx.HOBOBilling
 {
     /// <summary>
     /// Class name is important for Extension operations.
@@ -22,17 +17,17 @@ namespace Microsoft.Liftr.ACIS.Nginx.RPaaS
     /// Also we need to implement a method with same name, which works as main execute method for this operation.
     /// There is a way to overwrite and implement some other method as main execute, Refer References in section for details.
     /// </summary>
-    public class ListAllDeploymentsBySubIdOperation : AcisSMEOperation
+    public class GetHOBOBillingEntityOperation : AcisSMEOperation
     {
-        public override string OperationName => "Get Nginx Deployments";
+        public override string OperationName => "Get HOBO Billing Entity";
 
-        public override IAcisSMEOperationGroup OperationGroup => new RPaaSOperationGroup();
+        public override IAcisSMEOperationGroup OperationGroup => new HOBOBillingOperationGroup();
 
         public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceViewer };
 
         public override IEnumerable<IAcisSMEParameterRef> Parameters => new[]
             {
-                ParamRefFromParam.Get<SubscriptionIdTextParameter>(isOptional: false),
+                ParamRefFromParam.Get<DeploymentResourceIdTextParameter>(isOptional: false),
             };
 
         /// <summary>
@@ -55,11 +50,11 @@ namespace Microsoft.Liftr.ACIS.Nginx.RPaaS
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
         /// </summary>
-        /// <param name="subscriptionId">Resource Id. This param is picked from Params attribute in the same order</param>
+        /// <param name="deploymentResourceId">Resource Id. This param is picked from Params attribute in the same order</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse ListAllDeploymentsBySubId(string subscriptionId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(Constants.ListAllDeploymentsBySubscriptionId, extension, updater, endpoint, parameters: subscriptionId).Result;
+        public IAcisSMEOperationResponse GetHOBOBillingEntity(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetHOBOBillingEntity, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }

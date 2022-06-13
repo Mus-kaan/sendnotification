@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+using Microsoft.Liftr.ACIS.Contracts;
 using Microsoft.Liftr.ACIS.Nginx.Common;
 using Microsoft.Liftr.ACIS.Nginx.Parameters;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
@@ -54,6 +55,6 @@ namespace Microsoft.Liftr.ACIS.Nginx.RPaaS
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse GetNginxDeployment(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(Constants.GetNginxDeployment, extension, updater, endpoint, parameters: deploymentResourceId).Result;
+        public IAcisSMEOperationResponse GetNginxDeployment(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetNginxDeployment, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }

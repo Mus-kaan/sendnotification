@@ -8,7 +8,7 @@ using Microsoft.Liftr.ACIS.Nginx.Parameters;
 using Microsoft.WindowsAzure.Wapd.Acis.Contracts;
 using System.Collections.Generic;
 
-namespace Microsoft.Liftr.ACIS.Nginx.Marketplace
+namespace Microsoft.Liftr.ACIS.Nginx.VNetInjection
 {
     /// <summary>
     /// Class name is important for Extension operations.
@@ -17,11 +17,11 @@ namespace Microsoft.Liftr.ACIS.Nginx.Marketplace
     /// Also we need to implement a method with same name, which works as main execute method for this operation.
     /// There is a way to overwrite and implement some other method as main execute, Refer References in section for details.
     /// </summary>
-    public class GetMarketplaceResourceByDeploymentOperation : AcisSMEOperation
+    public class GetVNetInjectionEntityOperation : AcisSMEOperation
     {
-        public override string OperationName => "Get Marketplace Resource By Deployment";
+        public override string OperationName => "Get VNet Injection Entity";
 
-        public override IAcisSMEOperationGroup OperationGroup => new MarketplaceOperationGroup();
+        public override IAcisSMEOperationGroup OperationGroup => new VNetInjectionOperationGroup();
 
         public override IEnumerable<AcisUserClaim> ClaimsRequired => new[] { AcisSMESecurityGroup.PlatformServiceViewer };
 
@@ -50,11 +50,11 @@ namespace Microsoft.Liftr.ACIS.Nginx.Marketplace
         /// Name of the method is same as class name after truncating Operation in the end.
         /// for example this class name is FetchSaasResourceId and thus method name is FetchSaasResourceId()
         /// </summary>
-        /// <param name="deploymentId">Resource Id. This param is picked from Params attribute in the same order</param>
+        /// <param name="deploymentResourceId">Resource Id. This param is picked from Params attribute in the same order</param>
         /// <param name="extension">Management extension</param>
         /// <param name="updater">Operation progress updater</param>
         /// <param name="endpoint">Current end point</param>
         /// <returns></returns>
-        public IAcisSMEOperationResponse GetMarketplaceResourceByDeployment(string deploymentId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetMarketplaceResourceByDeployment, extension, updater, endpoint, parameters: deploymentId).Result;
+        public IAcisSMEOperationResponse GetVNetInjectionEntity(string deploymentResourceId, IAcisServiceManagementExtension extension = null, IAcisSMEOperationProgressUpdater updater = null, IAcisSMEEndpoint endpoint = null) => Common.Utilities.CallOperationAsync(ACISOperationTypes.GetVNetInjectionEntityByDeployment, extension, updater, endpoint, parameters: deploymentResourceId).Result;
     }
 }
